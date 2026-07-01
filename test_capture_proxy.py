@@ -212,6 +212,13 @@ class VisionRewriteTests(unittest.TestCase):
                     {
                         "inferenceGatewayBaseUrl": "https://old.example/anthropic",
                         "inferenceGatewayApiKey": "old-key",
+                        "inferenceModels": [
+                            {
+                                "name": "claude-sonnet-4-6",
+                                "labelOverride": "deepseek-v4-pro",
+                                "supports1m": True,
+                            }
+                        ],
                     }
                 ),
                 encoding="utf-8",
@@ -221,6 +228,7 @@ class VisionRewriteTests(unittest.TestCase):
                 "claude_3p_config_dir": str(config_dir),
                 "claude_3p_provider_id": provider_id,
                 "claude_3p_provider_name": "CC Switch",
+                "served_models": ["claude-sonnet-4-6", "claude-haiku-4-5"],
             }
 
             apply_claude_3p_gateway_config(config, "http://127.0.0.1:9980/anthropic", "")
@@ -228,6 +236,10 @@ class VisionRewriteTests(unittest.TestCase):
             provider = json.loads(provider_path.read_text(encoding="utf-8"))
             self.assertEqual(provider["inferenceGatewayBaseUrl"], "http://127.0.0.1:9980/anthropic")
             self.assertEqual(provider["inferenceGatewayApiKey"], "old-key")
+            self.assertEqual(
+                provider["inferenceModels"],
+                [{"name": "claude-sonnet-4-6"}, {"name": "claude-haiku-4-5"}],
+            )
             backups = build_admin_state({"dump_dir": tmp_dir, "log_file": str(Path(tmp_dir) / "proxy.log"), **config})["claude_3p"]["backups"]
             self.assertEqual(len(backups), 1)
 

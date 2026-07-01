@@ -276,6 +276,13 @@ def claude_3p_paths(config: dict[str, Any]) -> dict[str, Path]:
     }
 
 
+def build_claude_3p_inference_models(config: dict[str, Any]) -> list[dict[str, str]]:
+    model_ids = config.get("served_models", DEFAULT_CONFIG["served_models"])
+    if not isinstance(model_ids, list):
+        model_ids = DEFAULT_CONFIG["served_models"]
+    return [{"name": str(model_id)} for model_id in model_ids if str(model_id).strip()]
+
+
 def make_claude_3p_backup(config: dict[str, Any]) -> Path:
     paths = claude_3p_paths(config)
     stamp = f"{dt.datetime.now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:8]}"
@@ -358,6 +365,7 @@ def apply_claude_3p_gateway_config(config: dict[str, Any], base_url: str, api_ke
             "disableDeploymentModeChooser": True,
             "inferenceGatewayAuthScheme": "bearer",
             "inferenceGatewayBaseUrl": base_url,
+            "inferenceModels": build_claude_3p_inference_models(config),
             "inferenceProvider": "gateway",
         }
     )
