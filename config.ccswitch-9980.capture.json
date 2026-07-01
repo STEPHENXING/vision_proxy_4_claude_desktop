@@ -1,0 +1,44 @@
+{
+  "listen_host": "127.0.0.1",
+  "listen_port": 9980,
+  "upstream_base_url": "https://api.deepseek.com",
+  "strip_path_prefix": "",
+  "upstream_path_prefix": "",
+  "model_map": {
+    "claude-sonnet-*": "deepseek-v4-flash",
+    "claude-opus-*": "deepseek-v4-pro",
+    "claude-haiku-*": "deepseek-v4-flash",
+    "claude-fable-*": "deepseek-v4-pro"
+  },
+  "served_models": [
+    "claude-sonnet-4-6",
+    "claude-opus-4-8",
+    "claude-haiku-4-5"
+  ],
+  "dump_dir": "~/.claude/vision_proxy_http/dumps",
+  "log_file": "~/.claude/vision_proxy_http/proxy.log",
+  "vision_enabled": true,
+  "vision_provider": "siliconflow",
+  "vision_base_urls": {
+    "modelscope": "https://api-inference.modelscope.cn/v1",
+    "siliconflow": "https://api.siliconflow.cn/v1"
+  },
+  "vision_api_key_envs": {
+    "modelscope": "MODELSCOPE_API_KEY",
+    "siliconflow": "GUIJILIUDONG_API_KEY"
+  },
+  "vision_model": "qwen3-vl-8b",
+  "vision_model_aliases": {
+    "paddleocr": "PaddlePaddle/PaddleOCR-VL-1.5",
+    "qwen3-vl-8b": "Qwen/Qwen3-VL-8B-Instruct",
+    "qwen3-vl-32b": "Qwen/Qwen3-VL-32B-Instruct"
+  },
+  "vision_timeout_seconds": 45,
+  "max_image_bytes": 8000000,
+  "image_cache_path": "~/.claude/vision_proxy_http/cache/image_descriptions.json",
+  "claude_3p_config_dir": "~/AppData/Local/Claude-3p/configLibrary",
+  "claude_3p_provider_id": "00000000-0000-4000-8000-000000157210",
+  "claude_3p_provider_name": "Vision Proxy",
+  "proxy_public_url": "http://127.0.0.1:9980/anthropic",
+  "copy_timestamped_dumps": true
+}
